@@ -1,3 +1,8 @@
+// Created by Isaias Perez Vega
+// ---------------------------------------
+// Sinchronized-cooperating multithreading
+// simulates banking transactions
+
 package com.BankSimulator;
 
 
@@ -8,5 +13,8 @@ public interface Transaction {
 
     public void set(int amount);
     public int get();
+
+    public int getBalance();
+    public void setBalance(int balance);
 
 }

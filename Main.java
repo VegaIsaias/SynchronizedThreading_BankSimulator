@@ -1,39 +1,34 @@
-//  Created by Isaias Perez Vega
-//  ============================
-//  Banking Simulator
+// Created by Isaias Perez Vega
+// ---------------------------------------
+// Sinchronized-cooperating multithreading
+// simulates banking transactions
 
 package com.BankSimulator;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 public class Main {
 
     public static void main(String[] args) {
 
-        ExecutorService application = Executors.newFixedThreadPool(10);
-
-        //ExecutorService dep = Executors.newFixedThreadPool(4);
-        //ExecutorService with = Executors.newFixedThreadPool(6);
-
+        // Synchronized transaction
         Transaction accountBalance = new SyncTransaction();
 
-        System.out.printf("Deposit Threads \t Withdrawal Threads \t\t Balance\n");
-        System.out.printf("--------------- \t ------------------ \t\t -----------\n");
+        System.out.printf("Deposit Threads    \t\t Withdrawal Threads \t\t Balance\n");
+        System.out.printf("------------------ \t\t ------------------ \t\t ------------------\n");
 
-        try {
-            //dep.execute(new Deposit(accountBalance));
-            //with.execute(new Withdraw(accountBalance));
-            application.execute(new Deposit(accountBalance));
-            application.execute(new Withdraw(accountBalance));
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        // Creating 4 threads dedicated for deposits
+        for (int i = 1; i < 5; i++) {
+            Deposit dep = new Deposit(accountBalance);
+            Thread t = new Thread(dep);
+            t.start();
         }
-        application.shutdown();
-        //dep.shutdown();
-        //with.shutdown();
+
+        // Creating 6 threads dedicated for withdrawals
+        for (int i = 1; i < 7; i++) {
+            Withdraw with = new Withdraw(accountBalance);
+            Thread t = new Thread(with);
+            t.start();
+        }
+
     }
 }
