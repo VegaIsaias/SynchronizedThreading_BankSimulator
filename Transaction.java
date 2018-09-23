@@ -6,7 +6,7 @@ package com.BankSimulator;
 // invoked by the Depost and Withdraw requests. //
 public interface Transaction {
 
-    public void deposit(double amount);
-    public void withdraw(double amount);
+    public void set(int amount);
+    public int get();
 
 }
